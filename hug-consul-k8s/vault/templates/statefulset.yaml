@@ -1,0 +1,74 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    app: {{ .Values.name }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+spec:
+  serviceName: {{ .Values.name }}
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - {{ .Values.name }}
+              topologyKey: kubernetes.io/hostname
+      terminationGracePeriodSeconds: 10
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: {{ .Values.name }}
+          image: "{{ .Values.image }}:{{ .Values.image_version }}"
+          imagePullPolicy: Always
+          securityContext:
+            capabilities:
+              add:
+                - IPC_LOCK
+          env:
+          - name: VAULT_ADDR
+            value: https://127.0.0.1:8200
+          - name: VAULT_SKIP_VERIFY
+            value: "1"
+          - name: K8S_HOST_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: K8S_HOSTNAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: VAULT_LOCAL_CONFIG
+            value: >-
+                  listener "tcp" {
+                    address       = "0.0.0.0:8200"
+                    tls_disable   = "true"
+                  } 
+                  storage "consul" { 
+                    address       = "$(K8S_HOST_IP):8500" 
+                    path          = "vault/"
+                    scheme        = "http"
+                  }
+                  plugin_directory = "/etc/vault/plugins/"
+                  api_addr         = "https://$(VAULT_SERVICE_HOST):8200"
+                  cluster_addr     = "https://$(VAULT_SERVICE_HOST):8201"
+                  ui               = "true"
+                  cluster_name     = "vault"
+          args:
+          - "server"
+          - "-log-level=info"
+          ports:
+          - containerPort: 8200
+            protocol: TCP
+          - containerPort: 8201
+            protocol: TCP
