@@ -4,7 +4,7 @@ The purpose of this demo is to show that you can control the state of your Compu
 ### How the Playbook Works
 The playbook, *site.yml* , runs on a group of hosts called `compute-instances` and its first task is to query all Compute Instances that currently exist in a certain project and then compiles the names into an Ansible list called `existing_instance_list`. Once we have our list of current Compute Instances, two tasks are run, one task creates an Ansible group that will contain the new hosts that need to be provisioned (the delta of the `compute-instances` hosts and Compute Instances that currently exist in GCP) and the other task also creates an Ansible group that will contain the hosts that need to be destroyed (compilation of Compute instances that currently exist in GCP and hosts that are not in `compute-instances`).
 
-Once we lists are compiled, the playbook runs a play on our newely created `new_instances` group that will provision any new Compute Instances via the `gcp_compute_instance` module. The playbook then takes cares of destroying nodes by running a final play on our newely created `old_instances` group that will destroy any nodes we no longer want in our Google project.
+Once we lists are compiled, the playbook runs a play on our newely created `new_instances` group that will provision any new Compute Instances via the `gcp_compute_instance` module. The playbook then takes care of destroying nodes by running a final play on our newely created `old_instances` group that will destroy any nodes we no longer want in our Google project.
 
 ### Requirements
 * Ansible >= 2.7
@@ -12,7 +12,7 @@ Once we lists are compiled, the playbook runs a play on our newely created `new_
 * requests >= 2.18.4
 * google-auth >= 1.3.0
 
-In order to utilize the Google Cloud Ansible modules, you must specify a service account that has the permissions to read and write Compute Instances. Once a service account is created, generate a JSON file that will contain all authentication necessary to iteract with the GCP API and put the JSON file in the same working directory as the inventory file.
+In order to utilize the Google Cloud Ansible modules, you must specify a service account that has the permissions to read and write Compute Instances. Once a service account is created, generate a JSON file that will contain all authentication necessary to interact with the GCP API and put the JSON file in the same working directory as the inventory file.
 
 ### Example Usecase
 For this usecase, lets assume I currently have 2 Compute Instances in my GCP project: 
