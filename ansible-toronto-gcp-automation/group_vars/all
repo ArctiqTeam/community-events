@@ -1,0 +1,7 @@
+---
+# Project Info Variables
+project_name: jacob-sandbox
+auth_kind: serviceaccount
+service_account_file: service.json
+zone: us-east1-b
+existing_instance_list: []

@@ -1,0 +1,5 @@
+---
+source_image: projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
+disk_size_gb: 50
+network_interface_name: eth0
+machine_type: n1-standard-1

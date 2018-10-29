@@ -1,0 +1,83 @@
+---
+- name: Playbook defining our Google Cloud Platform Infrastructure
+  hosts: compute-instances
+  gather_facts: no
+  tasks:
+    - name: Get all current hosts in Google Cloud Platform
+      gcp_compute_instance_facts:
+        zone: "{{ zone }}"
+        project: "{{ project_name }}"
+        auth_kind: "{{ auth_kind }}"
+        service_account_file: "{{ service_account_file }}"
+        scopes: "https://www.googleapis.com/auth/compute"
+      delegate_to: localhost
+      run_once: yes
+      register: existing_instances
+
+    - name: Create a list of existing Compute Instances
+      set_fact:
+        existing_instance_list: "{{ existing_instance_list }} + [ '{{ item.name }}' ]"
+      with_items:
+        - "{{ existing_instances['items'] }}"
+      run_once: yes
+
+    - name: Create an Ansible group of nodes we need to provision
+      add_host:
+        name: "{{ item }}"
+        groups:
+          - new_instances
+      with_items:
+        - "{{ groups['compute-instances'] }}"
+      when: item not in existing_instance_list
+
+    - name: Create an Ansible group of nodes we need to destory
+      add_host:
+        name: "{{ item }}"
+        groups:
+          - old_instances
+      with_items:
+        - "{{ existing_instance_list }}"
+      when: item not in groups['compute-instances']
+
+- name: Provision any new Compute Instances
+  hosts: new_instances
+  gather_facts: no
+  tasks:
+    - name: Provision any new Compute Instances
+      gcp_compute_instance:
+        state: present
+        name: "{{ inventory_hostname }}"
+        machine_type: "{{ machine_type }}"
+        zone: "{{ zone }}"
+        disks:
+          - auto_delete: true
+            boot: yes
+            initialize_params:
+              source_image: "{{ source_image }}"
+              disk_size_gb: "{{ disk_size_gb }}"
+        network_interfaces:
+          - name: "{{ network_interface_name }}"
+            access_configs: "{{ access_configs|default([]) }}"
+        project: "{{ project_name }}"
+        metadata: "{{ metadata | default({}) }}"
+        tags:
+          items: "{{ tags | default([]) }}"
+        auth_kind: "{{ auth_kind }}"
+        service_account_file: "{{ service_account_file }}"
+        scopes:
+          - https://www.googleapis.com/auth/compute
+      delegate_to: localhost
+
+- name: Destroy any Compute Instances
+  hosts: old_instances
+  gather_facts: no
+  tasks:
+    - name: Destroy any Compute Instances
+      gcp_compute_instance:
+        state: absent
+        name: "{{ inventory_hostname }}"
+        zone: "{{ zone }}"
+        project: "{{ project_name }}"
+        auth_kind: "{{ auth_kind }}"
+        service_account_file: "{{ service_account_file }}"
+      delegate_to: localhost

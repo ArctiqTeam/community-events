@@ -1,0 +1,8 @@
+[compute-instances]
+instance-1
+bastion-node
+#instance-2
+
+[new_instances]
+
+[old_instances]
