@@ -93,5 +93,7 @@ ssh -i roles/azure-lab/files/id_rsa azureadmin@40.85.247.231
 ## Helpful Links
 
 https://github.com/Azure-Samples/ansible-playbooks
+
 https://docs.microsoft.com/en-us/azure/ansible/
+
 https://docs.ansible.com/ansible/latest/scenario_guides/guide_azure.html
