@@ -1,0 +1,4 @@
+---
+- name: Run Lab Activity
+  include_tasks: "{{ activity }}.yaml"
+  when: activity is defined

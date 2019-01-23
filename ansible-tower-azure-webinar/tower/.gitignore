@@ -1,0 +1,4 @@
+*.tfstate*
+.terraform/*
+license
+secrets.yml

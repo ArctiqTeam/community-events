@@ -1,0 +1,7 @@
+---
+- name: Delete Resouce Group
+  delegate_to: localhost
+  azure_rm_resourcegroup:
+    name: "{{ lab_name }}-{{ rg_name }}"
+    state: absent
+    force: yes

@@ -1,0 +1,6 @@
+- name: Destroy VM
+  delegate_to: localhost
+  azure_rm_virtualmachine:
+    resource_group: "{{ lab_name }}-{{ rg_name }}"
+    name: "{{ inventory_hostname }}"
+    state: absent

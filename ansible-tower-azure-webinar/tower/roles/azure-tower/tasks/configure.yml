@@ -1,0 +1,78 @@
+---
+- name: Wait for instances to finish initializing
+  pause:
+    seconds: 15
+#  when: | changed
+
+- name: Get facts for tower's network interface
+  azure_rm_networkinterface_facts:
+    resource_group: "{{ rgname }}"
+    name: towaz-nic-01
+  register: nic_output
+  tags: debug
+
+- name: get facts for the publicip to get the external IP
+  azure_rm_publicipaddress_facts:
+    resource_group: "{{ rgname }}"
+  register: publicip_output
+  tags: debug
+
+- name: Add host to group
+  add_host:
+    name: tower-towaz
+    ansible_host: "{{ publicip_output.ansible_facts.azure_publicipaddresses[0].properties.ipAddress }}.xip.io"
+    ansible_user: "ansible"
+    groups: newtower
+  register: add_linux_output
+  changed_when: no
+
+- name: set fact of public IP just in case
+  set_fact:
+    towaz_ip: "{{ nic_output.ansible_facts.azure_networkinterfaces[0].properties.ipConfigurations[0].properties.privateIPAddress }}"
+    towaz_ext_ip: "{{ publicip_output.ansible_facts.azure_publicipaddresses[0].properties.ipAddress }}"
+
+- name: "Internal IP for Tower node as towaz_ip"
+  debug:
+    #var: towaz_ip
+    msg: "THE INTERNAL AZURE IP FOR THE TOWER NODE IS: {{ towaz_ip }}"
+  tags: debug
+
+- name: public IP for Tower VM which will be created
+  debug:
+    msg: "THE PUBLIC IP FOR THE TOWER NODE IS:  {{ towaz_ext_ip }} or {{ towaz_ext_ip }}.xip.io" 
+  tags: debug
+
+- name: "Create more security rules "
+  azure_rm_securitygroup:
+    name: "towaz-nic-01"
+    resource_group: "{{ rgname }}"
+    purge_rules: no
+    rules:
+      - name: 'AllowRMQinternalIP'
+        protocol: 'Tcp'
+        source_address_prefix: "{{ towaz_ext_ip }}" 
+        destination_port_range: 5672
+        access: Allow
+        priority: 1002
+        direction: Inbound
+      - name: 'AllowRMQInternetIP'
+        protocol: 'Tcp'
+        source_address_prefix: "{{ towaz_ip }}" 
+        destination_port_range: 5672
+        access: Allow
+        priority: 1003
+        direction: Inbound
+      - name: 'port80'
+        protocol: 'Tcp'
+        source_address_prefix: * 
+        destination_port_range: 80
+        access: Allow
+        priority: 1004
+        direction: Inbound
+      - name: 'port443'
+        protocol: 'Tcp'
+        source_address_prefix: * 
+        destination_port_range: 443
+        access: Allow
+        priority: 1005
+        direction: Inbound

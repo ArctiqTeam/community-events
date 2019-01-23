@@ -1,0 +1,100 @@
+---
+# tasks file for tower-provisioner
+
+- name: prep resource group
+  azure_rm_resourcegroup:
+    name: "{{ rgname }}"
+    state: "{{ tstate }}"
+    location: "{{ azregion }}"
+    tags: 
+      demo: redhat-azure
+
+- name: Create virtual network
+  azure_rm_virtualnetwork:
+    resource_group: "{{ rgname }}"
+    name: "{{ rgname }}_vnet"
+    state: "{{ tstate }}" 
+    address_prefixes: "10.0.0.0/16"
+
+- name: prep subnet
+  azure_rm_subnet:
+    name: "{{ rgname }}_subnet"
+    resource_group: "{{ rgname }}"
+    virtual_network: "{{ rgname }}_vnet"
+    address_prefix: "10.0.4.0/24"
+    state: "{{ tstate }}"
+
+- name: prep availability set for managed disk vm
+  azure_rm_availabilityset:
+    name: "{{ rgname }}-mdisk-av-set"
+    resource_group: "{{ rgname }}"
+    platform_update_domain_count: 2
+    platform_fault_domain_count: 2
+    sku: Aligned
+    state: "{{ tstate }}"
+
+- name: Create a network interface using existing security group and public IP
+  azure_rm_networkinterface:
+    name: towaz-nic-01
+    resource_group: "{{ rgname }}"
+    virtual_network: "{{ rgname }}_vnet"
+    subnet_name: "{{ rgname }}_subnet"
+    state: "{{ tstate }}"
+#     security_group: secgroup001
+    ip_configurations:
+      - name: ipconfig1
+        public_ip_address_name: towaz-publicip001
+        primary: True
+#     set_fact:
+#       towaz_ip: "{{  }}"
+  register: output_nic
+  
+- name: "Create security rules "
+  azure_rm_securitygroup:
+    name: "towaz-nic-01"
+    resource_group: "{{ rgname }}"
+    purge_rules: no
+    rules:
+      - name: 'AllowFromYourOwnInternetIP'
+        protocol: 'Tcp'
+        source_address_prefix: "{{ mylocalIP }}" 
+        destination_port_range: 22
+        access: Allow
+        priority: 1000
+        direction: Inbound
+      - name: 'AllowFromYourEXTInternetIP'
+        protocol: 'Tcp'
+        source_address_prefix: "{{ mypublicIP }}" 
+        destination_port_range: 22
+        access: Allow
+        priority: 1001
+        direction: Inbound
+
+- name: prep tower vm instance
+  azure_rm_virtualmachine:
+    resource_group: "{{ rgname }}"
+    name: "tower-{{ rgname }}"
+    state: "{{ tstate }}"
+    admin_username: ansible
+    ssh_password_enabled: false
+    availability_set: "{{ rgname }}-mdisk-av-set"
+    managed_disk_type: Standard_LRS
+    os_disk_size_gb: 40
+    vm_size: Standard_F2s_v2
+    network_interfaces: towaz-nic-01
+    ssh_public_keys:
+    - path: /home/ansible/.ssh/authorized_keys
+      key_data: "{{ lookup ('file', '~/.ssh/id_rsa.pub') }}"
+    image:
+      offer: CentOS
+      publisher: OpenLogic
+      sku: '7.5'
+      version: latest
+    data_disks:
+        - lun: 0
+          disk_size_gb: 50
+          managed_disk_type: Standard_LRS
+
+- name: Configuring instances
+  include: configure.yml
+  

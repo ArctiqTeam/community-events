@@ -1,0 +1,18 @@
+---
+# default variables for lab environments
+rg_name: rg-01
+location: canadacentral
+vnet_name: vnet-01
+vnet_address: 10.0.0.0/16
+vnet_subnet_name: subnet-01
+vnet_subnet_address: 10.0.1.0/24
+public_ip_name: pubip-01
+net_sec_group_name: sg-01
+nic_name: nic_01
+vm_name: vm-01
+vm_size: Standard_DS1_v2
+sec_group_name: sg-01
+activity:
+tag: environment={{ lab_name }}
+key_dir: "{{ playbook_dir }}/roles/azure-lab/files/id_rsa.pub"
+key_data: " {{ lookup('file', key_dir) }} "

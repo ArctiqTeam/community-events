@@ -1,0 +1,12 @@
+---
+ssh_port: 22
+admin_password: 
+admin_password_hash: 
+domain_name: 
+pg_password: 
+rmq_password: 
+mylocalIP: 
+mypublicIP: 
+rgname: towaz
+azregion: westus2
+tstate: present

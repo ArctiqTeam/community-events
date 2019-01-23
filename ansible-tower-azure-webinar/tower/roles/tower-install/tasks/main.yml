@@ -1,0 +1,67 @@
+---
+# tasks file for tower-lab-install
+
+- name: Install requirements
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - ansible      # required   
+    - curl         # helpful
+    - wget         # helpful
+    - vim-enhanced # not required
+
+- name: install repos for CentOS
+  yum:
+    name: epel-release
+    state: latest
+
+- name: Download the Tower Installer
+  get_url:
+    url: https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-3.3.3-1.tar.gz
+    dest: /home/ansible/ansible-tower-setup-3.3.3-1.tar.gz
+    mode: 0755
+
+- name: check if installer is present
+  stat: path='/home/ansible/ansible-tower-setup-3.3.3-1/inventory'
+  register: tower_installer_present
+
+- name: Extract the tower bundle
+  unarchive:
+    src: '/home/ansible/ansible-tower-setup-3.3.3-1.tar.gz'
+    dest: /home/ansible/
+    remote_src: yes
+  when: tower_installer_present.stat.exists == False
+
+- name: Install the Tower Setup inventory file
+  template:
+    src: tower.inv.j2
+    dest: '/home/ansible/ansible-tower-setup-3.3.3-1/inventory'
+    force: yes
+  register: tower_reinstall
+
+- name: Check if Tower is already installed
+  stat: path=/var/lib/awx/favicon.ico
+  register: tower_installed
+  
+- name: Run the Tower installer
+  shell: '/home/ansible/ansible-tower-setup-3.3.3-1/setup.sh'
+  async: 1200
+  poll: 30
+  when: (tower_installed.stat.exists == False) or (tower_reinstall | changed)
+
+- name: ensure the tower license is in place
+  copy:
+    src: license
+    dest: /etc/tower/license
+    owner: awx
+    group: awx
+
+- name: Install the CLI
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+      - ansible-tower-cli
+      - python-crypto
+

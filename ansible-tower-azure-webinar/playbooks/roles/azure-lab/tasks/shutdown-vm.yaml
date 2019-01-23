@@ -1,0 +1,7 @@
+- name: Power off VMs
+  delegate_to: localhost
+  ignore_errors: yes
+  azure_rm_virtualmachine:
+    resource_group: "{{ lab_name }}-{{ rg_name }}"
+    name: "{{ inventory_hostname }}"
+    started: false

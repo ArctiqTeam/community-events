@@ -1,0 +1,40 @@
+---
+- name: Deploy Tower Instance
+  hosts: localhost
+  gather_facts: no
+  vars_files:
+    - vars/extra_vars.yml
+  roles:
+    - "azure-tower"
+
+- name: Wait for Connections
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Wait for hosts to respond
+      wait_for_connection:
+        timeout: 600 # 10 minutes
+
+#- name: Add The Tower group
+#  hosts: localhost
+#  gather_facts: no
+#  tasks:
+#    - name: Add tower hosts to tower group
+#      add_host:
+#        name: "{{ towaz_ext_ip }}"
+#        ansible_host: "{{ towaz_ext_ip }}"
+#        ansible_user: "{{ hostvars[item].ansible_user }}"
+#        groups: newtower
+#      with_items: "{{ groups.all }}"
+#      register: add_host_output
+#      when: '"tower" in hostvars[item].inventory_hostname'
+#      changed_when: no
+
+- name: Ansible Tower Install
+  hosts: newtower
+  become: yes
+  remote_user: ansible
+  vars_files:
+    - vars/extra_vars.yml
+  roles:
+    - "tower-install"
