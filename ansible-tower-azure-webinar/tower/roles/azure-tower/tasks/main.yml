@@ -4,7 +4,6 @@
 - name: prep resource group
   azure_rm_resourcegroup:
     name: "{{ rgname }}"
-    state: "{{ tstate }}"
     location: "{{ azregion }}"
     tags: 
       demo: redhat-azure
@@ -13,7 +12,6 @@
   azure_rm_virtualnetwork:
     resource_group: "{{ rgname }}"
     name: "{{ rgname }}_vnet"
-    state: "{{ tstate }}" 
     address_prefixes: "10.0.0.0/16"
 
 - name: prep subnet
@@ -22,7 +20,6 @@
     resource_group: "{{ rgname }}"
     virtual_network: "{{ rgname }}_vnet"
     address_prefix: "10.0.4.0/24"
-    state: "{{ tstate }}"
 
 - name: prep availability set for managed disk vm
   azure_rm_availabilityset:
@@ -31,7 +28,6 @@
     platform_update_domain_count: 2
     platform_fault_domain_count: 2
     sku: Aligned
-    state: "{{ tstate }}"
 
 - name: Create a network interface using existing security group and public IP
   azure_rm_networkinterface:
@@ -39,7 +35,6 @@
     resource_group: "{{ rgname }}"
     virtual_network: "{{ rgname }}_vnet"
     subnet_name: "{{ rgname }}_subnet"
-    state: "{{ tstate }}"
 #     security_group: secgroup001
     ip_configurations:
       - name: ipconfig1
@@ -74,7 +69,6 @@
   azure_rm_virtualmachine:
     resource_group: "{{ rgname }}"
     name: "tower-{{ rgname }}"
-    state: "{{ tstate }}"
     admin_username: ansible
     ssh_password_enabled: false
     availability_set: "{{ rgname }}-mdisk-av-set"

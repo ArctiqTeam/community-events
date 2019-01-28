@@ -21,7 +21,6 @@ It does not handle:
 The structure of the module is as follows:
 ```
 tower
-├── tf_make-dns.tf
 ├── tower.inv.j2
 ├── ansible.cfg
 ├── provision.yml
@@ -74,13 +73,11 @@ tower
 Prepare the following files with your own information
 
 * extra_vars.yml
-* 
 
 Login to Azure and perform the following steps.
 
-
 ```
-az login    # browser opens and login can happen..
+az login    # browser opens and login can happen.. (not entirely necessary, but convenient for debugging)
 # export environment variables to allow Azure authentication
 export {ARM_CLIENT_ID,TF_VAR_ARM_CLIENT_ID}=<insert yours here>
 export {ARM_CLIENT_SECRET,TF_VAR_ARM_CLIENT_SECRET}=<insert yours here>
@@ -88,9 +85,7 @@ export {ARM_SUBSCRIPTION_ID,TF_VAR_ARM_SUBSCRIPTION_ID}=<insert yours here>
 export {ARM_TENANT_ID,TF_VAR_ARM_TENANT_ID}=<insert yours here>
 
 ```
-
-(To get the DNS part I'd also login to Google Cloud)
-(We also use Hashicorp Vault for secrets exchange)
+You will need to prepare the DNS part separately as it's not handled within this project.
 
 Run the playbook to make the role happen.
 
@@ -98,7 +93,4 @@ Run the playbook to make the role happen.
 ansible-playbook -i localhost provision.yml
 ```
 
-For this demo I chose to use our existing domain for an FQDN for Tower (& it's RabbitMQ) which lives in Google DNS,
-so that's what was prepared for this build to work. To achieve that, I chose Terraform.
-
-This repo will continue to be improved to include all automation in one run, given sufficient variables are provided.
+Feel free to submit PRs or Issues for improvements.
