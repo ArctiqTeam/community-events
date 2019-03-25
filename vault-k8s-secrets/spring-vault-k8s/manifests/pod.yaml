@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring-vault
+spec:
+  containers:
+  - name: spring-vault
+    image: gcr.io/container-secrets/spring-vault:latest
+    env:
+      - name: MVN_PROFILE
+        value: openshift
+      - name: SECRET_ID
+        valueFrom:
+          secretKeyRef:
+            name: secret-id
+            key: password
+  restartPolicy: Never
