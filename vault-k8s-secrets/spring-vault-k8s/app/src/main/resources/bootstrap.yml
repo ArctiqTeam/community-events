@@ -1,0 +1,7 @@
+spring.cloud.vault:
+    uri: https://vault.weirdscience.labs.arctiq.ca:8200
+    application-name: weirdscience
+    authentication: APPROLE
+    app-role:
+        role-id: ${ROLE_ID}
+        secret-id: ${SECRET_ID}
