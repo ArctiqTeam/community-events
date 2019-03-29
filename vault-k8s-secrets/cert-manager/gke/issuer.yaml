@@ -1,0 +1,15 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: vault-issuer
+spec:
+  vault:
+    path: pki/sign/cert-manager
+    server: https://vault.weirdscience.labs.arctiq.ca:8200
+    auth:
+      appRole:
+        path: approle
+        roleId: "d37b79df-3d0f-f089-4121-be4c6887b367"
+        secretRef:
+          name: cert-manager-vault-approle
+          key: secretId
