@@ -1,0 +1,11 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: weather-tls
+spec:
+  secretName: weather-tls
+  issuerRef:
+    name: vault-issuer
+  commonName: ocp.weather.weirdscience.labs.arctiq.ca
+  dnsNames:
+  - www.ocp.weather.weirdscience.labs.arctiq.ca
