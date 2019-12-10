@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-web-simpsons
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: go-web-simpsons
+  template:
+    metadata:
+      labels:
+        name: go-web-simpsons
+    spec:
+      containers:
+      - name: go-web-simpsons
+        image: <IMAGE>
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 3000

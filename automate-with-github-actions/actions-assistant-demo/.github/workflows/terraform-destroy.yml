@@ -1,0 +1,17 @@
+name: 'Terraform destroy'
+on:
+  issues:
+    types: [closed]
+jobs:
+  issue_parser:
+    runs-on: ubuntu-latest
+    name: Terraform destroy
+    steps:
+    - name: Terraform destroy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      uses: daniyalj/terraform-destroy-actions@v3
+      with:
+        org_name: 'daniyalj'
+        repo_name: 'actions-assistant-demo'

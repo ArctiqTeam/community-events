@@ -1,0 +1,1 @@
+while read p; do TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|r00tsh3ll/actionsgo-'$p':'${TAG}'|' $GITHUB_WORKSPACE/$p/deployment.yml ; done < $GITHUB_WORKSPACE/microservices.txt
