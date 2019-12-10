@@ -1,0 +1,1 @@
+while read p; do kubectl --kubeconfig=.kube/config apply -f $GITHUB_WORKSPACE/$p/deployment.yml ; done < $GITHUB_WORKSPACE/microservices.txt

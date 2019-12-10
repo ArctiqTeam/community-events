@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Random Beer Giphy</title>
+  </head>
+  <body>
+      <p align="center">Here Is Your Random {{ .Svc }}</p>
+    <div class="loading">
+      <p align="center"><img src={{.Data}}></a></p>
+    </div>
+    <div style="text-align:center;"><a href="https://giphy.com"><img src="{{ .Logo }}" alt="Powered by Giphy" height="100" width="150"></a></div>
+  </body>
+</html>
