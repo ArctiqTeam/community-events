@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('Montserrat.ttf') format('truetype');
+
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Mono';
+    src: url('FiraMono.ttf') format('truetype');
+
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Share Tech Mono';
+    src: url('ShareTechMono.ttf') format('truetype');
+
+    font-weight: normal;
+    font-style: normal;
+}
