@@ -3,17 +3,23 @@ kind: PodSecurityPolicy
 metadata:
   name: default-psp
 spec:
-  privileged: false
+  allowPrivilegeEscalation: false
+  fsGroup:
+    rule: RunAsAny
+  hostPorts:
+  - max: 100
+    min: 100
   runAsUser:
     rule: MustRunAsNonRoot
   seLinux:
     rule: RunAsAny
-  fsGroup:
-    rule: RunAsAny
   supplementalGroups:
     rule: RunAsAny
   volumes:
-  - 'nfs'
-  hostPorts:
-  - min: 100
-    max: 100
+  - nfs
+  - secret
+  - emptyDir
+  - configMap
+  - projected
+  - persistentVolumeClaim
+  - downwardAPI
