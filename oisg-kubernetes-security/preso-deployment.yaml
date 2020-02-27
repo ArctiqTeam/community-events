@@ -1,0 +1,28 @@
+#kubectl create secret docker-registry acr --docker-server oisgkubesecreg.azurecr.io --docker-username XXXX --docker-password XXXX -n preso
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: preso
+  labels:
+    app: preso
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: preso
+  template:
+    metadata:
+      labels:
+        app: preso
+    spec:
+      containers:
+      - name: preso
+        image: oisgkubesecreg.azurecr.io/preso:1.0
+        env:
+        - name: PRESO_NAME
+          value: default
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: acr
+# kubectl expose deployment preso --type=LoadBalancer --name=preso-service -n preso

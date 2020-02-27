@@ -2,3 +2,4 @@
 *.retry
 oisg-kubernetes-security/k8s-bob-user/*
 oisg-kubernetes-security/aqua/*
+oisg-kubernetes-security/terraform/*

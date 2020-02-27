@@ -7,6 +7,7 @@ Note:
   - kubectl create -f root-pod.yaml --kubeconfig=k8s-bob-user/bob-k8s-config
   - kubectl describe pod nginx-privileged -n preso
 
+
 # Aquasec Architecture 
 ![](images/aqua-architecture.jpg)<!-- .element style="border: 0; background: None; box-shadow: None height="100%" width="100%" text-align: center" -->
 
