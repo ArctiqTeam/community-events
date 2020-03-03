@@ -6,6 +6,6 @@ spec:
   containers:
     - name: nginx-privileged
       image: nginx:latest
-#      securityContext:
-#        privileged: true
-#        runAsUser: 0
+ #     securityContext:
+ #       privileged: true
+ #       runAsUser: 0
