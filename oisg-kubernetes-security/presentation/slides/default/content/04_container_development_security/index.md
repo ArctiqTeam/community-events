@@ -16,7 +16,7 @@ Note:
 
 # Development Security - DON'T
 - Ask for, or expect, security exceptions
-- Assume the new technology will “get by” old security policies 
+- Assume the new technology will "get by" old security policies 
 - Create custom images for every new app or build
 - Run apps as or containers as root
 - Run multiple applications in a container
