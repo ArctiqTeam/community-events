@@ -1,0 +1,6 @@
+---
+- name: SSH Secrets with Vault
+  hosts: network_devices
+  gather_facts: no
+  roles:
+    - role: vault_otp

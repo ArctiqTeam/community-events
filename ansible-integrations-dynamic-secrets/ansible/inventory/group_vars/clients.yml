@@ -1,0 +1,2 @@
+ansible_user: "{{ lookup('hashi_vault', 'secret=secrets/data/{{ inventory_hostname }}:') | json_query('data.user')}}"
+ansible_password: "{{ lookup('hashi_vault', 'secret=secrets/data/{{ inventory_hostname }}:') | json_query('data.password')}}"

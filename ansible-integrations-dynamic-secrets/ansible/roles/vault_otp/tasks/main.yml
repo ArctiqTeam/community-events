@@ -1,0 +1,20 @@
+---   
+- name: Generate OTP for Logon
+  uri:
+    url: "{{ lookup('env', 'VAULT_ADDR') }}/v1/ssh/creds/otp_key_role"
+    method: POST
+    headers:
+      Content-Type: application/json
+      X-Vault-Token: "{{ lookup('env','VAULT_TOKEN') }}"
+    body_format: json
+    body: '{"ip": "10.100.1.151"}'
+    status_code: 200
+  delegate_to: localhost
+  register: otp
+-  debug:
+    msg: "The OTP Key is: {{ otp.json.data.key}}"
+- set_fact:
+    ansible_password: "{{ otp.json.data.key}}"
+    ansible_user: vyos
+- name: Test PING using OTP
+  ping:

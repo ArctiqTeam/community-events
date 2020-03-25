@@ -1,0 +1,43 @@
+- name: Update VyOS Config
+  hosts: firewall
+  gather_facts: no
+  tasks:
+    - name: Get KV Data
+      uri:
+        url: "{{ lookup('env', 'VAULT_ADDR') }}/v1/kv/data/{{ inventory_hostname }}"
+        method: GET
+        headers:
+          Content-Type: application/json
+          X-Vault-Token: "{{ lookup('env','VAULT_TOKEN') }}"
+        return_content: yes
+        status_code: 200
+      register: auth
+      delegate_to: localhost
+    - set_fact:
+        ansible_user: "{{ auth.json.data.data.user }}"
+        ansible_password: "{{ auth.json.data.data.password }}"
+    - name: Config Updates
+      connection: network_cli
+      vyos_config:
+        save: yes
+        lines:
+          - set firewall name INBOUND-IN rule 72 action 'accept'
+          - set firewall name INBOUND-IN rule 72 destination address '10.100.1.201'
+          - set firewall name INBOUND-IN rule 72 destination port '8080'
+          - set firewall name INBOUND-IN rule 72 log 'enable'
+          - set firewall name INBOUND-IN rule 72 protocol 'tcp'
+          - set firewall name INBOUND-IN rule 72 state new 'enable'
+
+          - set nat destination rule 72 description 'Port Forward Beer App'
+          - set nat destination rule 72 destination port '8080'
+          - set nat destination rule 72 inbound-interface 'eth0'
+          - set nat destination rule 72 protocol 'tcp'
+          - set nat destination rule 72 translation address '10.100.1.201'
+          - set nat destination rule 72 translation port '8080'     
+#     - name: Config Updates
+#       connection: network_cli
+#       vyos_config:
+#         save: yes
+#         lines:
+#           - delete firewall name INBOUND-IN rule 72
+#           - delete nat destination rule 72
