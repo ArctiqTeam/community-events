@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  gather_facts: no
+  become: false
+  roles:
+    - role: terraform
+
+- hosts: node
+  gather_facts: no
+  become: true
+  roles:
+    - role: motd
+...

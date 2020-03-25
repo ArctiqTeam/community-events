@@ -1,0 +1,12 @@
+[clients]
+ocp-app-01.cloud.lab
+ocp-app-02.cloud.lab
+
+[vault]
+vault.cloud.lab
+
+[network_devices]
+router.cloud.lab
+
+[firewall]
+firewall.cloud.lab ansible_host=10.100.1.1 ansible_network_os=vyos

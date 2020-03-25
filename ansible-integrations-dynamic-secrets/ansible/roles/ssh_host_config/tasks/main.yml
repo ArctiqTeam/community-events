@@ -1,0 +1,51 @@
+    - name: Copy ssh-helper Archive
+      copy:
+        src: /tmp/vault-ssh-helper_0.1.4_linux_amd64.zip
+        dest: /tmp/vault-ssh-helper_0.1.4_linux_amd64.zip
+    - name: Ansible check file exists example.
+      stat:
+        path: /usr/local/bin/vault-ssh-helper
+      register: dir_exists
+    - name: Extract ssh-helper
+      command: 'sudo unzip -q /tmp/vault-ssh-helper_0.1.4_linux_amd64.zip -d /usr/local/bin'
+      when: dir_exists.stat.exists == False
+    - block:
+      - name: Make ssh-helper Executable/Set Permissions
+        file:
+          path: /usr/local/bin/vault-ssh-helper
+          owner: root
+          group: root
+          mode: '0755'
+      - name: Create Directory
+        file:
+          path: /etc/vault-ssh-helper.d/
+          owner: root
+          group: root
+          state: directory
+      - name: Template Out the ssh-helper Configuration File
+        template:
+          src: ssh_helper.j2
+          dest: /etc/vault-ssh-helper.d/config.hcl
+          owner: root
+          group: root
+          mode: '0644'
+      - name: Template Out the SSH PAM Configuration File
+        template:
+          src: pamd.j2
+          dest: /etc/pam.d/sshd
+          owner: root
+          group: root
+          mode: '0644'
+      - name: Update SSH Config File
+        blockinfile:
+          path: /etc/ssh/sshd_config
+          block: |
+            ChallengeResponseAuthentication yes
+            PasswordAuthentication no
+            UsePAM yes
+          backup: yes
+      - name: Restart SSHD
+        service:
+          name: ssh
+          state: restarted
+      become: True

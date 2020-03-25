@@ -1,0 +1,10 @@
+---
+- name: Wait 600 seconds for target connection to become reachable/usable
+  wait_for_connection:
+
+- name: Update PS1 Bash Prompt
+  lineinfile:
+    path: "{{ bashrc_path }}"
+    regexp: "{{ PS1_regex }}"
+    line: "{{ PS1_line }}"
+...

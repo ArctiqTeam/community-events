@@ -1,0 +1,18 @@
+---
+- name: SSH Secrets with Vault
+  hosts: tower.cloud.lab
+  gather_facts: no
+  tasks:
+  - name: Download ssh-helper
+    get_url:
+      url: https://releases.hashicorp.com/vault-ssh-helper/0.1.4/vault-ssh-helper_0.1.4_linux_amd64.zip
+      dest: /tmp/vault-ssh-helper_0.1.4_linux_amd64.zip
+      validate_certs: False
+    delegate_to: localhost
+
+- name: Bootstrap Node for SSH OTP
+  hosts: network_devices
+  gather_facts: no
+  # become: True
+  roles:
+    - role: ssh_host_config

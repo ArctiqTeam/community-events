@@ -1,0 +1,9 @@
+---
+banner_script_src: ../files/banner
+banner_script_dest: /usr/local/bin/banner
+banner_caller_src: ../templates/banner-caller
+banner_caller_dest: /etc/profile.d/banner.sh # Extension necessary
+banner_owner: root
+banner_group: root
+banner_mode: '0755'
+...

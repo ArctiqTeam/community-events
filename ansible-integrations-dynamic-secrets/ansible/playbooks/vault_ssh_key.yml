@@ -1,0 +1,27 @@
+---
+  - name: SSH Signed Secrets with Vault
+    hosts: vault
+    gather_facts: no
+    environment:
+       VAULT_ADDR: "{{ lookup('env', 'VAULT_ADDR') }}"
+       
+    tasks:
+      - name: Vault Login
+        shell: "vault login token={{ lookup('env', 'VAULT_TOKEN') }}"
+        register: vault_ssh_engine        
+      - name: Enable SSH Secrets Engine
+        shell: vault secrets enable ssh
+        register: vault_ssh_engine
+        ignore_errors: True
+      - name: Generate SSH Public Key for Clients on Vault CA
+        shell: |
+          vault write \
+            -field=public_key \
+            ssh/config/ca \
+            generate_signing_key=true | sudo tee /etc/ssh/trusted-user-ca-keys.pem
+        register: ssh_pub_key
+      - debug:
+          msg: "{{ ssh_pub_key }}"
+
+
+

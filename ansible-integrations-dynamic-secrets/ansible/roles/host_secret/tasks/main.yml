@@ -1,0 +1,33 @@
+- name: Generate Password
+  shell: </dev/urandom tr -dc '1234567890qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM' | head -c16; echo
+  register: rdm_password
+  delegate_to: localhost
+
+- name: Get KV Data
+  uri:
+    url: "{{ lookup('env', 'VAULT_ADDR') }}/v1/kv/data/{{ inventory_hostname }}"
+    method: GET
+    headers:
+      Content-Type: application/json
+      X-Vault-Token: "{{ lookup('env','VAULT_TOKEN') }}"
+    return_content: yes
+    status_code: 200
+  register: auth
+  delegate_to: localhost
+-  debug:
+    msg: "The current password for {{ inventory_hostname }} is: {{ auth.json.data.data.password }}"
+
+- name: Update Vault with the New Password
+  uri:
+    url: "{{ lookup('env', 'VAULT_ADDR') }}/v1/kv/data/{{ inventory_hostname }}"
+    method: PUT
+    headers:
+      Content-Type: application/json
+      X-Vault-Token: "{{ lookup('env','VAULT_TOKEN') }}"
+    body_format: json
+    body: "{{ lookup('template', 'passwd.j2') }}"
+    status_code: 200
+  delegate_to: localhost
+
+- name: Update Password on End Hosts
+  shell: "echo {{ ansible_user }}:{{ rdm_password.stdout }} | chpasswd"
