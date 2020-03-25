@@ -9,6 +9,7 @@
 * Linux Endpoint Clients
 * Linux-based Firewall (VyOS)
 * Terraform
+* Cloud Provider Account
 
 ## Presentation: 
 
