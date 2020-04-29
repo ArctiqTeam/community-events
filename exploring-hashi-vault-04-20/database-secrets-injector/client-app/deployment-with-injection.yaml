@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-client
+  namespace: postgres-client
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-client
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/agent-inject-secret-.pgpass: "database/creds/readonly"
+        vault.hashicorp.com/agent-inject-template-.pgpass: |
+          {{- with secret "database/creds/readonly" }}
+          postgres.default:5432:postgresdb:{{ .Data.username }}:{{ .Data.password }}
+          {{ end }}
+        vault.hashicorp.com/agent-inject-command-.pgpass: |
+          chmod 0600 /vault/secrets/.pgpass
+        vault.hashicorp.com/agent-inject-secret-username: "database/creds/readonly"
+        vault.hashicorp.com/agent-inject-template-username: |
+          {{- with secret "database/creds/readonly" }}
+          {{ .Data.username }}
+          {{ end }}
+        vault.hashicorp.com/auth-path: "auth/gke-k8s"
+        vault.hashicorp.com/role: "postgres-client"
+    spec:
+      containers:
+        - name: postgres-client
+          image: gcr.io/arctiqteam-images/psql-test-loop:v1.0.0
+          imagePullPolicy: "Always"
+          env:
+            - name: HOME
+              value: /vault/secrets
+          args:
+            [
+              "-h",
+              "postgres.default",
+              "postgresdb",
+            ]

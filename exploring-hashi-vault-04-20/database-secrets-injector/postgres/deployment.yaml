@@ -1,0 +1,58 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      # initContainers:
+      #   - name: container-test
+      #     image: busybox
+      #     command:
+      #       - sh
+      #       - -c
+      #       - 'cp /certs/* /work-dir/ && chown 999:999 /work-dir/* && chmod 0600 /work-dir/*'
+      #     volumeMounts:
+      #       - mountPath: /work-dir
+      #         name: workdir
+      #       - name: tls
+      #         mountPath: /certs
+      containers:
+        - name: postgres
+          image: postgres:11.2
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          args:
+            - -c
+            - ssl=off
+            # - -c
+            # - ssl_cert_file=/work-dir/tls.crt
+            # - -c
+            # - ssl_key_file=/work-dir/tls.key
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb
+            # - mountPath: /work-dir
+              # name: workdir
+      volumes:
+        # - name: workdir
+        #   emptyDir: {}
+        # - name: tls
+        #   secret:
+        #     secretName: postgres-tls
+        #     items:
+        #     - key: tls.crt
+        #       path: tls.crt
+        #     - key: tls.key
+        #       path: tls.key
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim

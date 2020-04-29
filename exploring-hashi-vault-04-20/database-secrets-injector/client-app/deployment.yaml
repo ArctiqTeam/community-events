@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-client
+  namespace: postgres-client
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-client
+    spec:
+      containers:
+        - name: postgres-client
+          image: gcr.io/arctiqteam-images/psql-test-loop:v1.0.0
+          imagePullPolicy: "Always"
+          args:
+            [
+              "-h",
+              "postgres.default",
+              "postgresdb",
+            ]
