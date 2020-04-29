@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: encrypter-deployment
+  labels:
+    app: encrypter
+spec:
+  selector:
+    matchLabels:
+      app: encrypter
+  template:
+    metadata:
+      labels:
+        app: encrypter
+    spec:
+      containers:
+      - name: encrypter
+        image: jacobmammoliti/encrypter:0.0.1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: VAULT_ADDR
+          value: ""
+        - name: ROLE_ID
+          value: ""
+        - name: SECRET_ID
+          valueFrom:
+            secretKeyRef:
+              name: vault-secret-id
+              key: id
+        volumeMounts:
+        - name: data
+          mountPath: /mnt/data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: encrypter-pv-claim

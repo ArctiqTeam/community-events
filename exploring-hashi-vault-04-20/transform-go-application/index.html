@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Transformation Demo</title>
+    </head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <body>
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+            <h5 class="my-0 mr-md-auto font-weight-normal">Vault Transformation Demo</h5>
+        </div>
+        <div class="container">
+            <div class="col-md-8 order-md-1">
+            <form action="" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">First Name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="cnumber">Credit Card Number</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="cnumber" placeholder="xxxx xxxx xxxx xxxx">
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit"  value="transform">Submit with Transform</button>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit"  value="transit">Submit with Transit</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <div class="card-deck mb-3 text-center">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        Credit Card Numbers
+                    </div>
+                    {{ with . }}
+                    <div class="card-body">
+                      {{ range . }}
+                        {{ . }}
+                        <hr class="mb-4">
+                      {{ end }}
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
