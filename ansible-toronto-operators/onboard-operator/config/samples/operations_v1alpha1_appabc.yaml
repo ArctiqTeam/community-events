@@ -1,0 +1,12 @@
+apiVersion: operations.arctiq.ca/v1alpha1
+kind: AppTeam
+metadata:
+  name: appteamabc
+spec:
+  admin_groups:
+    - "admin_abc@arctiq.ca"
+    - "admin2_abc@arctiq.ca"
+  edit_groups:
+    - "edit_abc@arctiq.ca"
+  view_groups:
+    - "view_abc@arctiq.ca"

@@ -1,0 +1,24 @@
+---
+# tasks file for AppTeam
+- name: Deploy the namespaces
+  community.kubernetes.k8s:
+      api_version: v1
+      kind: Namespace
+      name: "{{ ansible_operator_meta.name | lower }}-{{ item }}"
+      state: "{{ state | default('present') }}"
+  loop: "{{ environments }}"
+
+- name: Deploy Network Policy
+  community.kubernetes.k8s:
+    state: "{{ state | default('present') }}"
+    namespace: "{{ ansible_operator_meta.name | lower }}-{{ item.0 }}"
+    definition: "{{ lookup('file', item.1) | from_yaml }}"
+  when: item.0 != "dev"
+  loop: "{{ environments | product(netpol_files) | list }}"
+
+- name: Deploy Admin RBAC
+  community.kubernetes.k8s:
+    state: "{{ state | default('present') }}"
+    namespace: "{{ ansible_operator_meta.name | lower }}-{{ item.0 }}"
+    definition: "{{ lookup('template', item.1) | from_yaml }}"
+  loop: "{{ environments | product(rbac_files) | list }}"

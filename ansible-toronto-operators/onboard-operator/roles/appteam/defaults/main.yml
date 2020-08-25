@@ -1,0 +1,17 @@
+---
+# defaults file for AppTeam
+environments:
+  - "dev"
+  - "qa"
+  - "prd"
+
+netpol_files:
+  - "netpol_ingress.yaml"
+  - "netpol_monitoring.yaml"
+  - "netpol_namespaces.yaml"
+
+rbac_files:
+  - "rbac_admin.yaml.j2"
+  - "rbac_edit.yaml.j2"
+  - "rbac_view.yaml.j2"
+  

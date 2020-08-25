@@ -1,0 +1,13 @@
+---
+# Use the 'create api' subcommand to add watches to this file.
+- version: v1alpha1
+  group: operations.arctiq.ca
+  kind: AppTeam
+  role: appteam
+  watchDependentResources: True
+  watchClusterScopedResources: True
+  finalizer:
+    name: finalizer.operations.arctiq.ca
+    vars:
+      state: absent
+# +kubebuilder:scaffold:watch

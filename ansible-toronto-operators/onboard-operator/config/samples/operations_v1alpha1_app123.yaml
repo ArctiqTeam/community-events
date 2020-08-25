@@ -1,0 +1,12 @@
+apiVersion: operations.arctiq.ca/v1alpha1
+kind: AppTeam
+metadata:
+  name: appteam123
+spec:
+  admin_groups:
+    - "admin_123@arctiq.ca"
+    - "admin2_123@arctiq.ca"
+  edit_groups:
+    - "edit_123@arctiq.ca"
+  view_groups:
+    - "view_123@arctiq.ca"

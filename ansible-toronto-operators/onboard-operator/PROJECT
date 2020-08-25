@@ -1,0 +1,8 @@
+domain: arctiq.ca
+layout: ansible.sdk.operatorframework.io/v1
+projectName: onboard-operator
+resources:
+- group: operations
+  kind: AppTeam
+  version: v1alpha1
+version: 3-alpha

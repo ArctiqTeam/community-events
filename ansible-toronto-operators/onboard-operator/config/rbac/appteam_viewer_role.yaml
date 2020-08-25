@@ -1,0 +1,20 @@
+# permissions for end users to view appteams.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: appteam-viewer-role
+rules:
+- apiGroups:
+  - operations.arctiq.ca
+  resources:
+  - appteams
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - operations.arctiq.ca
+  resources:
+  - appteams/status
+  verbs:
+  - get
