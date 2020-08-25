@@ -1,0 +1,9 @@
+---
+- hosts: badbox
+  tasks:
+  - name: say hello
+    debug:
+      msg: Hello World! My name is {{ inventory_hostname }}
+  - name: fail
+    fail:
+      msg: "Failed"

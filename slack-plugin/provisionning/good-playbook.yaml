@@ -1,0 +1,16 @@
+---
+- hosts: goodbox
+  tasks:
+  - name: say hello
+    debug:
+      msg: Hello World! My name is {{ inventory_hostname }}
+  - name: change the motd
+    copy:
+      content: 'Welcome to the good box!'
+      dest: /etc/motd
+    become: yes
+  - name: a skipped instruction
+    say:
+      msg: '{{ inventory_hostname }} is all done'
+    delegate_to: localhost
+    when: false
