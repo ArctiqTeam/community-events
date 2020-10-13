@@ -21,7 +21,7 @@ The GNS3 Network Simulator is used to emulate the devices:
 
 [GNS3](https://www.gns3.com/software/download)
 
-[GNS3 Topology](/assets/gns3-topology.png)
+[GNS3 Topology](network_automation/assets/gns3-topology.png)
 
 # Playbooks
 
@@ -36,7 +36,7 @@ The GNS3 Network Simulator is used to emulate the devices:
 
 Here are a few screenshots to capture the survey settings used in the demo's. Taking this a step further, the variable used to populate the `hosts` for the playbook runs can match a specific parameter in the firing webhook or be based on reference branches in the Source Code Management tool.
 
-[Multi-Vendor Device Inventory Host Variable](/assets/tower-survey.png)
+[Multi-Vendor Device Inventory Host Variable](network_automation/assets/tower-survey.png)
 
 # Connect
 
