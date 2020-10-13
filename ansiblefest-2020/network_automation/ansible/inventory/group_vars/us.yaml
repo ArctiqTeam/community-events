@@ -1,0 +1,3 @@
+ntp_servers:
+    - us.pool.ntp.org
+    - north-america.pool.ntp.org

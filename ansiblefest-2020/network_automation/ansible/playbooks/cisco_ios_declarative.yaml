@@ -1,0 +1,38 @@
+- name: Gather Facts
+  hosts: "{{ which_hosts }}"
+  gather_facts: false
+  tasks:
+    - name: Get Cisco IOS Facts
+      ios_facts:
+        gather_subset: 
+          - '!all'
+          - '!min'
+        gather_network_resources: 
+          - l3_interfaces
+          - l2_interfaces
+          
+- name: Verify L2 is Config on Device Matches Code
+  ios_l2_interfaces:
+    config: "{{ london_cisco_ios_l2_config['l2_interfaces'] }}"
+    register: ios_l2
+
+- name: Verify L3 is Config on Device Matches Code
+  ios_l3_interfaces:
+    config: "{{ london_cisco_ios_l3_config['l3_interfaces'] }}"
+    register: ios_l3
+
+- name: Ensure Config Matches Code
+  assert:
+    that: 
+      - not ios_l2.changed
+      - not ios_l3.changed
+
+- name: Merge IOS VLAN Configuration
+  ios_vlans:
+    config: "{{ london_cisco_ios_l2_vlans }}"
+    state: merged
+
+- name: Merge provided configuration with device configuration
+  ios_l2_interfaces:
+      config: "{{ london_cisco_ios_l2_config }}"
+      state: merged

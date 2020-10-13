@@ -1,0 +1,46 @@
+#jinja2: lstrip_blocks: True
+
+Arista EOS info:
+{% for host in groups['eos'] %}
+Hostname: {{ hostvars[host].ansible_net_hostname }}
+Version: {{ hostvars[host].ansible_net_version }}
+System: {{ hostvars[host].ansible_net_system }}
+Model: {{ hostvars[host].ansible_net_model }}
+Serial Number: {{ hostvars[host].ansible_net_serialnum }}
+{% endfor %}
+
+Cisco NXOS info:
+{% for host in groups['cisco_nxos'] %}
+Hostname: {{ hostvars[host].ansible_net_hostname }}
+Version: {{ hostvars[host].ansible_net_version }}
+System: {{ hostvars[host].ansible_net_system }}
+Model: {{ hostvars[host].ansible_net_model }}
+Firmware: {{ hostvars[host].ansible_net_image }}
+Serial Number: {{ hostvars[host].ansible_net_serialnum }}
+{% endfor %}
+
+Cisco IOS info:
+{% for host in groups['cisco_ios'] %}
+Hostname: {{ hostvars[host].ansible_net_hostname }}
+Version: {{ hostvars[host].ansible_net_version }}
+System: {{ hostvars[host].ansible_net_system }}
+Model: {{ hostvars[host].ansible_net_model }}
+Firmware: {{ hostvars[host].ansible_net_image }}
+Serial Number: {{ hostvars[host].ansible_net_serialnum }}
+{% endfor %}
+
+VyOS device info:
+{% for host in groups['vyos'] %}
+Hostname: {{ hostvars[host].ansible_net_hostname }}
+Version: {{ hostvars[host].ansible_net_version }}
+System: {{ hostvars[host].ansible_net_system }}
+Model: {{ hostvars[host].ansible_net_model }}
+{% endfor %}
+
+Cumulus device info:
+{% for host in groups['cumulus'] if in ansible_play_batch %}
+Hostname: {{ hostvars[host].ansible_nodename }}
+Version: {{ hostvars[host].ansible_distribution_release }}
+Model: {{ hostvars[host].ansible_cmdline.cl_platform }}
+Firmware: {{ hostvars[host].ansible_cmdline.BOOT_IMAGE }}
+{% endfor %}

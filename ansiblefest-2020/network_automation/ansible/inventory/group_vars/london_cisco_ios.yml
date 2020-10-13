@@ -1,0 +1,4 @@
+ansible_network_os: ios
+ansible_connection: network_cli
+ansible_user: "{{ lookup('env', 'NETWORK_USER') }}"
+ansible_password: "{{ lookup('env', 'NETWORK_PASS') }}"

@@ -1,0 +1,14 @@
+---
+tower_rbac:
+  - project: e-ansiblefest-2020
+    team: global-helpdesk
+    role: use
+  - project: e-ansiblefest-2020
+    team: global-network-admins
+    role: admin
+  - project: e-ansiblefest-2020
+    team: london-admins
+    role: admin
+  - project: e-ansiblefest-2020
+    team: london-helpdesk
+    role: use

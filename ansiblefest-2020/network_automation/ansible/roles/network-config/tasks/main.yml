@@ -1,0 +1,42 @@
+---
+# tasks file for network-config
+    # - name: Merge provided configuration with device configuration
+    #   nxos_interfaces:
+    #     config: 
+    #       - name: Ethernet1/1
+    #         description: 'Configured by Ansible'
+    #         enabled: True
+    #       - name: Ethernet1/2
+    #         description: 'Configured by Ansible Network'
+    #         enabled: False
+    #     state: merged
+    
+    - name: Backup NXOS Config
+      nxos_config:
+        backup: yes
+        backup_options:
+          filename: "{{ inventory_hostname }}.conf"
+          dir_path: "{{ playbook_dir }}/backup"
+
+    - name: Update Configuration
+      nxos_config:
+        src: config.j2
+        save_when: modified
+      register: config
+      changed_when: config.updates is defined
+    # - name: Replaces device configuration of listed interfaces with provided configuration
+    #   nxos_interfaces:
+    #     config:
+    #       - name: Ethernet1/1
+    #         description: 'Configured by Ansible'
+    #         enabled: True
+    #       - name: Ethernet1/2
+    #         description: 'Configured by Ansible Network'
+    #         enabled: False
+    #         mode: layer2
+    #     state: replaced
+
+    - debug:
+        msg: "{{ config.updates }}"
+      when: config.updates is defined
+      run_once: yes

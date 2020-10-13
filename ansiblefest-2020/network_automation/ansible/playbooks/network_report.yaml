@@ -1,0 +1,39 @@
+---
+- name: Gather Network Device Facts
+  hosts: "{{ which_hosts }}"
+  gather_facts: false
+  tasks:
+    - block:
+      - name: NXOS Facts
+        nxos_facts:
+        register: nxos_facts
+        when: ansible_network_os == 'nxos'
+
+      - name: IOS Facts
+        ios_facts:
+        when: ansible_network_os == 'ios'
+
+      - name: VyOS Facts
+        vyos_facts:
+        when: ansible_network_os == 'vyos'
+
+      - name: EOS Facts
+        eos_facts:
+        when: ansible_network_os == 'eos'
+      when: 
+        - ansible_network_os is defined
+
+- name: Gather Network Device Facts
+  hosts: "{{ which_hosts }}"
+  gather_facts: false
+  tasks:
+    - name: Cumulus Facts
+      setup:
+      register: cumulus_facts
+      when: ansible_connection == "ssh"
+    
+- name: Generate Report on Network Devices
+  hosts: "{{ which_hosts }}"
+  gather_facts: false
+  roles:
+  - network-reports

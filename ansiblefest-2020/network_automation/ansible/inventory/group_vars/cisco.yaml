@@ -1,0 +1,3 @@
+ansible_user: "{{ lookup('env', 'NETWORK_USER') }}"
+ansible_password: "{{ lookup('env', 'NETWORK_PASS') }}"
+ansible_connection: network_cli

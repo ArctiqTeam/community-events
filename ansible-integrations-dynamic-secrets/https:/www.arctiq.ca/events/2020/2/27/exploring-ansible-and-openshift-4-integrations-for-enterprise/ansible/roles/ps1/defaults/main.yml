@@ -1,0 +1,6 @@
+---
+PS1: '[\u@\h \W]\$ '
+PS1_line: "export PS1='{{ PS1 }}'"
+PS1_regex: ".*PS1.*"
+bashrc_path: "/home/markieta/.bashrc"
+...

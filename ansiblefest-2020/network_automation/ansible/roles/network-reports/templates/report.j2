@@ -1,0 +1,56 @@
+#jinja2: lstrip_blocks: True
+
+{% if 'eos' in group_names %}
+{% for host in groups['eos'] %}
+Arista EOS info:
+Hostname: {{ hostvars[host].ansible_net_hostname }}
+Version: {{ hostvars[host].ansible_net_version }}
+System: {{ hostvars[host].ansible_net_system }}
+Model: {{ hostvars[host].ansible_net_model }}
+Serial Number: {{ hostvars[host].ansible_net_serialnum }}
+{% endfor %}
+{% endif %}
+
+{% if 'cisco_nxos' in group_names %}
+{% for host in groups['cisco_nxos'] %}
+Cisco NXOS info:
+Hostname: {{ hostvars[host].ansible_net_hostname }}
+Version: {{ hostvars[host].ansible_net_version }}
+System: {{ hostvars[host].ansible_net_system }}
+Model: {{ hostvars[host].ansible_net_model }}
+Firmware: {{ hostvars[host].ansible_net_image }}
+Serial Number: {{ hostvars[host].ansible_net_serialnum }}
+{% endfor %}
+{% endif %}
+
+{% if 'cisco_ios' in group_names %}
+{% for host in groups['cisco_ios'] %}
+Cisco IOS info:
+Hostname: {{ hostvars[host].ansible_net_hostname }}
+Version: {{ hostvars[host].ansible_net_version }}
+System: {{ hostvars[host].ansible_net_system }}
+Model: {{ hostvars[host].ansible_net_model }}
+Firmware: {{ hostvars[host].ansible_net_image }}
+Serial Number: {{ hostvars[host].ansible_net_serialnum }}
+{% endfor %}
+{% endif %}
+
+{% if 'vyos' in group_names %}
+{% for host in groups['vyos'] %}
+VyOS device info:
+Hostname: {{ hostvars[host].ansible_net_hostname }}
+Version: {{ hostvars[host].ansible_net_version }}
+System: {{ hostvars[host].ansible_net_system }}
+Model: {{ hostvars[host].ansible_net_model }}
+{% endfor %}
+{% endif %}
+
+{% if 'cumulus' in group_names %}
+{% for host in groups['cumulus'] %}
+Cumulus device info:
+Hostname: {{ hostvars[host].ansible_nodename }}
+Version: {{ hostvars[host].ansible_distribution_release }}
+Model: {{ hostvars[host].ansible_cmdline.cl_platform }}
+Firmware: {{ hostvars[host].ansible_cmdline.BOOT_IMAGE }}
+{% endfor %}
+{% endif %}

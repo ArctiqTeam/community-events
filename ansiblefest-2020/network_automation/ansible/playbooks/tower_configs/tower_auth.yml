@@ -1,0 +1,5 @@
+# User may add tower auth creds to this file and encrypt it using `ansible-vault`
+---
+tower_hostname: localhost #ansiblefest-tower.arctiqhart.team.arctiq.ca
+tower_username: admin
+tower_password: "{{ lookup('env', 'TOWER_PASS') }}"

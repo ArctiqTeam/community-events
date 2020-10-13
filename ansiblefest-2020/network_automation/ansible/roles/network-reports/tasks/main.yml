@@ -1,0 +1,16 @@
+---
+# tasks file for network-reports
+- block: 
+  - name: Generate Network Device Report
+    template:
+      src: report.j2
+      dest: /var/tmp/network-report
+
+  - name: Print Out Network Report
+    command: "cat /var/tmp/network-report"
+    register: network_report
+
+  - debug:
+      msg: "{{ network_report.stdout_lines }}"
+  # run_once: yes
+  delegate_to: localhost
