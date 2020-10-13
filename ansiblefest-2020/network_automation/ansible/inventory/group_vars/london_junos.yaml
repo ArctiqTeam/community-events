@@ -1,0 +1,4 @@
+ansible_network_os: junos
+ansible_user: "{{ lookup('env', 'JUNOS_NETWORK_USER') }}"
+ansible_password: "{{ lookup('env', 'JUNOS_NETWORK_PASS') }}"
+ansible_connection: netconf

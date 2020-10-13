@@ -1,0 +1,3 @@
+ansible_user: cumulus
+ansible_password: 'CumulusLinux!'
+ansible_connection: ssh

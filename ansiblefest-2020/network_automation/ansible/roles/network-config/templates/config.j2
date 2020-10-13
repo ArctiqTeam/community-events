@@ -1,0 +1,14 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+{% for interface in interfaces %}
+{{ interface.name }}
+  {{ interface.state }}
+  {% if interface.description is defined %}
+  description {{ interface.description }}
+  {% endif %}
+  {% if interface.type is defined %}
+  {{ interface.type }}
+  {% endif %}
+  {% if interface.vlan is defined %}
+  {{ interface.vlan }}
+  {% endif %}
+{% endfor %}

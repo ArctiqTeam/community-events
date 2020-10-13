@@ -1,0 +1,17 @@
+---
+tower_organizations:
+  - name: Ansiblefest
+  - name: bu-ldn-network-ops
+  - name: bu-ldn-sec-ops
+  - name: bu-helpdesk
+  - name: global-network-admins
+  - name: global-security-admins
+  - name: global-helpdesk
+  - name: london
+    description: London Office Tower Org
+  - name: ireland
+    description: Ireland Office Tower Org
+  - name: toronto
+    description: Toronto Office Tower Org
+  - name: austin
+    description: Austin Office Tower Org

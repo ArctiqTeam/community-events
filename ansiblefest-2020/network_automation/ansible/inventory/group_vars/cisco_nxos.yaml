@@ -1,0 +1,54 @@
+ansible_network_os: nxos
+ansible_connection: network_cli
+ansible_user: "{{ lookup('env', 'NXOS_NETWORK_USER') }}"
+ansible_password: "{{ lookup('env', 'NXOS_NETWORK_PASS') }}"
+
+# interfaces:
+#     - name: interface Ethernet3/1
+#       description: '**MGMT Uplink**'
+#       state: no shutdown 
+#       vlan: switchport access vlan 100
+#       type: switchport
+#     - name: interface Ethernet3/2
+#       description: 'Interconnect to nxos02-e3/1'
+#       state: no shutdown 
+#       vlan: switchport access vlan 100
+#       type: switchport
+#     - name: interface Ethernet4/1
+#       description: 'Client 1'
+#       state: no shutdown 
+#       vlan: switchport access vlan 100
+#       type: switchport
+#     - name: interface Ethernet4/2
+#       description: 'Unused switchport'
+#       state: shutdown
+#     - name: interface Ethernet4/3
+#       description: 'Unused switchport'
+#       state: shutdown
+#     - name: interface Ethernet4/4
+#       description: 'Unused switchport'
+#       state: shutdown
+#     - name: interface Ethernet4/5
+#       description: 'Unused switchport'
+#       state: shutdown
+#     - name: interface Ethernet4/6
+#       description: 'Unused switchport'
+#       state: shutdown
+#     - name: interface Ethernet4/7
+#       description: 'Unused switchport'
+#       state: shutdown
+#     - name: interface Ethernet4/8
+#       description: 'Unused switchport'
+#       state: shutdown
+#     - name: interface Ethernet4/9
+#       description: 'Unused switchport'
+#       state: shutdown
+#     - name: interface Ethernet4/10
+#       description: 'Unused switchport'
+#       state: shutdown
+#     - name: interface Ethernet4/11
+#       description: 'Client 100'
+#       state: no shutdown      
+#     - name: interface Ethernet4/20
+#       description: 'Client 101'
+#       state: no shutdown      

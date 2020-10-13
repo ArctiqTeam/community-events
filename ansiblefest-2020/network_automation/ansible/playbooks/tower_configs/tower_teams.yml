@@ -1,0 +1,22 @@
+---
+tower_teams:
+  - name: global-network-admins
+    organization: global-network-admins
+  - name: global-helpdesk
+    organization: global-helpdesk
+  - name: london-admins
+    organization: london
+  - name: london-helpdesk
+    organization: london
+  - name: toronto-admins
+    organization: toronto
+  - name: toronto-helpdesk
+    organization: toronto
+  - name: austin-admins
+    organization: austin
+  - name: austin-helpdesk
+    organization: austin
+  - name: ireland-admins
+    organization: ireland
+  - name: ireland-helpdesk
+    organization: ireland

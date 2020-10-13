@@ -1,0 +1,16 @@
+london_vyos_l3_config:
+    - name: eth0
+      ipv4:
+        - address: 192.168.0.1/28
+    - name: eth2
+      vifs:
+        - vlan_id: 100
+          ipv4:
+            - address: 172.16.31.254/21
+        - vlan_id: 200
+          ipv4:
+            - address: 172.16.30.254/21
+        - vlan_id: 300
+          ipv4:
+            - address: 172.16.29.254/21
+

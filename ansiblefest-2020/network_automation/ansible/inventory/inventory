@@ -1,0 +1,145 @@
+[cisco_ios:children]
+london_cisco_ios
+ireland_cisco_ios
+toronto_cisco_ios
+austin_cisco_ios
+
+[cisco_nxos:children]
+london_cisco_nxos
+ireland_cisco_nxos
+toronto_cisco_nxos
+austin_cisco_nxos
+
+[cumulus:children]
+london_cumulus
+ireland_cumulus
+toronto_cumulus
+austin_cumulus
+
+[vyos:children]
+london_vyos
+ireland_vyos
+toronto_vyos
+austin_vyos
+
+[eos:children]
+london_eos
+ireland_eos
+toronto_eos
+austin_eos
+
+[junos:children]
+london_junos
+ireland_junos
+toronto_junos
+austin_junos
+
+[global:children]
+london
+ireland
+toronto
+austin
+
+[london:children]
+london_cisco_ios
+london_cisco_nxos
+london_cumulus
+london_vyos
+london_eos
+london_junos
+
+[london_cisco_ios]
+london_ios.cloud.lab ansible_host=10.101.1.251
+
+[london_cisco_nxos]
+london_nxos.cloud.lab ansible_host=10.101.1.250
+
+[london_cumulus]
+london_cumulus.cloud.lab ansible_host=10.101.1.253
+
+[london_vyos]
+london_vyos.cloud.lab ansible_host=10.101.1.254
+
+[london_eos]
+london_eos.cloud.lab ansible_host=10.101.1.248
+
+[london_junos]
+london_junos.cloud.lab ansible_host=10.101.1.249
+
+[ireland:children]
+ireland_cisco_ios
+ireland_cisco_nxos
+ireland_cumulus
+ireland_eos
+ireland_vyos
+ireland_junos
+
+[ireland_cisco_ios]
+ireland_cisco_ios.cloud.lab ansible_host=10.102.1.251
+
+[ireland_cisco_nxos]
+ireland_cisco_nxos.cloud.lab ansible_host=10.102.1.250
+
+[ireland_cumulus]
+ireland_cumulus.cloud.lab ansible_host=10.102.1.253
+
+[ireland_eos]
+ireland_eos.cloud.lab ansible_host=10.102.1.248
+
+[ireland_vyos]
+ireland_vyos.cloud.lab ansible_host=10.102.1.254
+
+[ireland_junos]
+ireland_junos.cloud.lab ansible_host=10.102.1.249
+
+[toronto:children]
+toronto_cisco_ios
+toronto_cisco_nxos
+toronto_cumulus
+toronto_eos
+toronto_vyos
+toronto_junos
+
+[toronto_cisco_ios]
+toronto_cisco_ios.cloud.lab ansible_host=10.103.1.251 
+
+[toronto_cisco_nxos]
+toronto_cisco_nxos.cloud.lab ansible_host=10.103.1.250
+
+[toronto_cumulus]
+toronto_cumulus.cloud.lab ansible_host=10.103.1.253
+
+[toronto_eos]
+toronto_eos.cloud.lab ansible_host=10.103.1.248
+
+[toronto_vyos]
+toronto_vyos.cloud.lab ansible_host=10.103.1.254
+
+[toronto_junos]
+toronto_junos.cloud.lab ansible_host=10.103.1.249
+
+[austin:children]
+austin_cisco_ios
+austin_cisco_nxos
+austin_cumulus
+austin_eos
+austin_vyos
+austin_junos
+
+[austin_cisco_ios]
+austin_cisco_ios.cloud.lab ansible_host=10.104.1.251
+
+[austin_cisco_nxos]
+austin_cisco_nxos.cloud.lab ansible_host=10.104.1.250
+
+[austin_cumulus]
+austin_cumulus.cloud.lab ansible_host=10.104.1.253
+
+[austin_eos]
+austin_eos.cloud.lab ansible_host=10.104.1.248
+
+[austin_vyos]
+austin_vyos.cloud.lab ansible_host=10.104.1.254
+
+[austin_junos]
+austin_junos.cloud.lab ansible_host=10.104.1.249

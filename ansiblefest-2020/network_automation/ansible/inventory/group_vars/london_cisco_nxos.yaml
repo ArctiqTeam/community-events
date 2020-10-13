@@ -1,0 +1,6 @@
+ansible_network_os: nxos
+ansible_connection: network_cli
+ansible_user: "{{ lookup('env', 'NXOS_NETWORK_USER') }}"
+ansible_password: "{{ lookup('env', 'NXOS_NETWORK_PASS') }}"
+
+save_config: "copy run start"

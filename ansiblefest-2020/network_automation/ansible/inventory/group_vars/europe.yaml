@@ -1,0 +1,4 @@
+ntp_servers:
+    - ie.pool.ntp.org
+    - europe.pool.ntp.org
+

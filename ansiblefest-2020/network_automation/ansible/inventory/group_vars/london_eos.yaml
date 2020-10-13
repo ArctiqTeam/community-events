@@ -1,0 +1,4 @@
+ansible_network_os: eos
+ansible_user: admin
+ansible_password: admin
+ansible_connection: network_cli

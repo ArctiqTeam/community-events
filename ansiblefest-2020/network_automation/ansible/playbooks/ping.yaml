@@ -1,0 +1,47 @@
+- name: Check Cisco NXOS Network Device Reachability
+  hosts: "{{ which_hosts }}"
+  gather_facts: False
+  environment:
+    ANSIBLE_DEPRECATION_WARNINGS: false
+  vars:
+    ansible_connection: network_cli
+  tasks:
+    - block:
+      - name: NXOS Ping
+        nxos_ping:
+          dest: "{{ ansible_host }}"
+        when: ansible_network_os == 'nxos'
+
+      - name: IOS Ping
+        ios_ping:
+          dest: "{{ ansible_host }}"
+        when: ansible_network_os == 'ios'
+
+      - name: VyOS Ping
+        vyos_ping:
+          dest: "{{ ansible_host }}"
+        when: ansible_network_os == 'vyos'
+
+      - name: Arista Ping
+        ping:
+        when: ansible_network_os == 'eos'
+
+      - name: Junos Ping
+        junos_ping:
+          dest: "{{ ansible_host }}"
+        when: ansible_network_os == 'junos'
+      ignore_errors: true  
+      when: 
+        - ansible_network_os is defined
+    
+- name: Check Cumulus Network Device Reachability
+  hosts: "{{ which_hosts }}"
+  gather_facts: False
+  tasks:      
+    - name: Cumulus Ping
+      ping:
+      ignore_errors: true  
+      when: 
+        - ansible_connection == "ssh"
+        - "'cumulus' in group_names"
+

@@ -1,0 +1,36 @@
+- name: Gather Facts
+  hosts: london_vyos
+  connection: network_cli
+  gather_facts: false
+  tasks:
+    - name: Get VyOS Facts
+      vyos_facts:
+        gather_subset: all
+        gather_network_resources: 
+          - 'l3_interfaces'
+          - 'interfaces'
+          
+    - name: Verify L2 is Config on Device Matches Code
+      vyos_interfaces:
+        config: "{{ ansible_network_resources['interfaces'] }}"
+      register: vyos_interfaces
+
+    - name: Verify L3 is Config on Device Matches Code
+      vyos_l3_interfaces:
+        config: "{{ ansible_network_resources['l3_interfaces'] }}"
+      register: vyos_l3_interfaces
+
+    - name: Ensure Config Matches Code
+      assert:
+        that: 
+          - not vyos_interfaces.changed
+          - not vyos_l3_interfaces.changed
+
+    - name: Layer 3 Port Configuration
+      vyos_l3_interfaces:
+          config: "{{ london_vyos_l3_config }}"
+          state: merged
+    
+    - name: Save the Configuration
+      vyos_config:
+        save: true

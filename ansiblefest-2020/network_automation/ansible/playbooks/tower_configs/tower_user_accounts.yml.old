@@ -1,0 +1,23 @@
+---
+tower_user_accounts:
+  - user: darth
+    is_superuser: True
+    password: An$iblefest2020
+  - user: luke
+    is_superuser: False
+    password: An$iblefest2020
+  - user: han
+    is_superuser: True
+    password: An$iblefest2020
+  - user: chewy
+    is_superuser: False
+    password: An$iblefest2020
+  - user: ben
+    is_superuser: True
+    password: An$iblefest2020
+  - user: r2
+    is_superuser: True
+    password: An$iblefest2020
+  - user: leia
+    is_superuser: True
+    password: An$iblefest2020

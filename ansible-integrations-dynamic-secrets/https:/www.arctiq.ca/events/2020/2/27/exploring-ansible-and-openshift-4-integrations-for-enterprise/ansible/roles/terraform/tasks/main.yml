@@ -1,0 +1,7 @@
+---
+- name: Execute Terraform
+  terraform:
+    project_path: "{{ project_dir }}"
+    binary_path: "{{ binary_path }}"
+    variables: "{{ variables }}"
+...

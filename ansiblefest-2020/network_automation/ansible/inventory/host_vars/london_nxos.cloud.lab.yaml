@@ -1,0 +1,85 @@
+ansible_network_os: nxos
+connection: network_cli
+ansible_user: "{{ lookup('env', 'NXOS_NETWORK_USER') }}"
+ansible_password: "{{ lookup('env', 'NXOS_NETWORK_PASS') }}"
+
+# Layer 3 Configurations
+
+london_cisco_nxos_l3_config:
+    - name: loopback0
+      ipv4:
+        - address: 10.101.150.1/24
+          
+#Layer 2 VLAN's
+
+london_cisco_nxos_l2_vlans:
+  - name: USER_DATA_Bottom_Floor
+    vlan_id: 10
+    state: active
+    enabled: true
+  - name: USER_DATA_Top_Floor
+    vlan_id: 20
+    state: active
+    enabled: true
+  - name: VOIP_VLAN
+    vlan_id: 100
+    state: active
+    enabled: true
+  - name: USER_DATA_Middle_Floor
+    vlan_id: 15
+    state: active
+    enabled: true
+
+# Layer 2 Port Configurations
+
+london_cisco_nxos_l2_config:
+  - name: Ethernet2/10
+    access:
+      vlan: 10
+  - name: Ethernet2/11
+    trunk:
+      allowed_vlans: 20,100
+      native_vlan: 100
+  - name: Ethernet2/12
+    access:
+      vlan: 10      
+  - name: Ethernet2/13
+    access:
+      vlan: 10
+  - name: Ethernet2/14
+    access:
+      vlan: 10
+  - name: Ethernet2/15
+    access:
+      vlan: 20
+  - name: Ethernet2/16
+    access:
+      vlan: 20
+  - name: Ethernet2/17
+    access:
+      vlan: 20
+  - name: Ethernet2/18
+    access:
+      vlan: 15
+
+# Layer 2 Port Names
+
+london_cisco_nxos_l2_name:
+  - name: Ethernet2/10
+    description: Port - BF-190
+  - name: Ethernet2/11
+    description: Port - TF-110
+  - name: Ethernet2/12
+    description: Port - BF-191
+  - name: Ethernet2/13
+    description: Port - BF-192
+  - name: Ethernet2/14
+    description: Port - BF-193
+  - name: Ethernet2/15
+    description: Port - TF-194
+  - name: Ethernet2/16
+    description: Port - TF-195
+  - name: Ethernet2/17
+    description: Port - TF-196
+  - name: Ethernet2/18
+    description: Port - MF-150
