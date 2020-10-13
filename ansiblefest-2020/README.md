@@ -1,6 +1,6 @@
 # Ansiblefest 2020 - Centralized RBAC for Networks with Ansible Tower
 
-This repository contains examples of automating using Ansible playbooks across network devices from multiple vendors including:
+This repository contains example playbooks, inventory and variable files to support automation across network devices from multiple vendors including:
 
 * Cisco
     * NXOS
@@ -11,7 +11,15 @@ This repository contains examples of automating using Ansible playbooks across n
 
 The advantage of using Ansible to automate networking devices is that it provides a centralized toolset that can interact with different vendor devices simultaneously. Tower further extends the value of using Ansible for Network Automation by providing a built-in, encrypted credential store, SCM integration and full RBAC capabilities. 
 
+As part of the Ansiblefest 2020 breakout session, 3 use cases were highlighted:
+
+1. Ansible Tower RBAC: Levels of Access
+2. Network Configuration as Code with Git Workflows
+3. Centralized Network Device Secrets
+
 # Ansible Tower Configuration as Code
+
+In an effort to emphasize Configuration as Code (CaC) wherever possible, Ansible Tower may also be configured from a set of defined variables and source from a Git repository. The Ansible connection below was used to configure Tower in support of the demos:
 
 [https://github.com/redhat-cop/tower_configuration](https://github.com/redhat-cop/tower_configuration)
 
