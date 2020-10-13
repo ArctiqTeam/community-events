@@ -15,11 +15,15 @@ The advantage of using Ansible to automate networking devices is that it provide
 
 [https://github.com/redhat-cop/tower_configuration](https://github.com/redhat-cop/tower_configuration)
 
+# GNS3 Network Simulator 
+
 The GNS3 Network Simulator is used to emulate the devices: 
 
 [GNS3](https://www.gns3.com/software/download)
 
-## Playbooks
+[GNS3 Topology](assets/gns3-topology.png)
+
+# Playbooks
 
 | Playbook Name  | Description  |
 |---|---|
@@ -27,3 +31,13 @@ The GNS3 Network Simulator is used to emulate the devices:
 | network_report.yaml  | Gather facts from multiple network devices and produce a templated Jinja 2 report |
 | cisco_nxos_declarative.yaml  | Configure Cisco NXOS Multi-Layer Switch from defined variable values  |
 | ping.yaml  | Perform a network PING using vendor modules to verify Ansible can connect to network devices with valid credentials |
+
+## Tower Surveys
+
+Here are a few screenshots to capture the survey settings used in the demo's. Taking this a step further, the variable used to populate the `hosts` for the playbook runs can match a specific parameter in the firing webhook or be based on reference branches in the Source Code Management tool.
+
+[Multi-Vendor Device Inventory Host Variable](assets/tower-survey.png)
+
+# Connect
+
+Reach out on [Twitter](https://twitter.com/arctiqhart), [GitHub](https://github.com/arctiqhart) or the [Arctiq Website](www.arctiq.ca)!
