@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin-config
+  labels:
+    app: pgadmin
+data:
+  PGADMIN_DEFAULT_EMAIL: tim.fairweather@arctiq.ca
+  PGADMIN_DEFAULT_PASSWORD: Arct1q!
+  # PGADMIN_ENABLE_TLS: "true"

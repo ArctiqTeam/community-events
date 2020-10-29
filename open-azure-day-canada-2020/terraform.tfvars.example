@@ -1,0 +1,3 @@
+appId    = "<Azure-App-ID>"
+password = ""
+tenant_id = "<Azure-Tenant-ID>"

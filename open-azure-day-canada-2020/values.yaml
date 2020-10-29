@@ -1,0 +1,29 @@
+server:
+  ha:
+    replicas: 5
+    raft:
+      config: |
+        ui = true
+
+        listener "tcp" {
+          tls_disable = 1
+          address = "[::]:8200"
+          cluster_address = "[::]:8201"
+        }
+
+        storage "raft" {
+          path = "/vault/data"
+        }
+        seal "azurekeyvault" {
+          client_id      = ""
+          client_secret  = ""
+          tenant_id      = ""
+          vault_name     = "vault-proper-kitten"
+          key_name       = "gen-key"
+        }
+
+        service_registration "kubernetes" {}
+
+ui:
+  enabled: true
+  serviceType: "LoadBalancer"
