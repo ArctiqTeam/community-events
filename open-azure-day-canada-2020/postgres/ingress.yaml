@@ -1,0 +1,19 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.org/redirect-to-https: "true"
+  name: pgadmin
+spec:
+  rules:
+  - host: pgadmin.arctiqtim.team.arctiq.ca
+    http:
+      paths:
+      - backend:
+          serviceName: pgadmin
+          servicePort: 5050
+  tls:
+  - hosts:
+    - pgadmin.arctiqtim.team.arctiq.ca
